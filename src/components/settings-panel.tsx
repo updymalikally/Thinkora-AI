@@ -1,0 +1,5 @@
+"use client";
+import Link from "next/link";import {useRouter} from "next/navigation";import {useTheme} from "next-themes";import {authClient} from "@/lib/auth/client";
+export default function SettingsPanel(){const router=useRouter();const{data:session}=authClient.useSession();const{resolvedTheme,setTheme}=useTheme();const dark=resolvedTheme==="dark";function toggle(){setTheme(dark?"light":"dark")};return <main className="auth-shell"><section className="auth-card"><Link className="brand" href="/chat">Thinkora<span> AI</span></Link><h1>Settings</h1><p>Manage your Thinkora workspace.</p><label className="field">Appearance<button className="button" onClick={toggle}>{dark?"Dark theme":"Light theme"} · Change</button></label><div className="field"><span>Signed in as</span><strong>{session?.user?.email??"Loading account…"}</strong></div><div className="auth-actions"><button className="button" onClick={()=>authClient.signOut().then(()=>router.push("/sign-in"))}>Sign out</button><Link className="button" href="/chat">Back to chat</Link></div></section></main>}
+
+
